@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="#{offers.favourite-offers}">Favourite offers</title>
+</head>
+<body>
+
+<main layout:fragment="page-content">
+  <div class="card">
+    <div class="card-body">
+      <div class="container">
+        <div class="mb-3">
+          <h4 th:text="#{offers.favourite-offer}">
+            Favourite offers
+          </h4>
+
+          <hr>
+          <th:block th:if="${favOffers.isEmpty}">
+            <p th:text="#{offers.no-favourite-offers-found}">No favourite offers found.</p>
+          </th:block>
+          <th:block th:if="${!fav.isEmpty}">
+            <th:block th:each="favouriteOffer : ${favouriteOffers}">
+              <div th:replace="offers/fragments/offer :: favourite(favouriteOffer=${favouriteOffer})"></div>
+            </th:block>
+          </th:block>
+        </div>
+
+        <th:block th:if="${favOffers.totalPages > 1}">
+          <div th:replace=" :: controls(page=${favOffers})"></div>
+        </th:block>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

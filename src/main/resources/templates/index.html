@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{main}">Main</title>
+</head>
+<body>
+
+<main layout:fragment="page-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-4" th:each="area : ${areas}">
+                        <h3 class="mb-3 fs-2">
+                            <a class="text-decoration-none link-secondary"
+                               th:href="@{/{url}/categories(url=${area.areaUrl})}"
+                               th:text="${area.areaName}">Area</a>
+                            <hr>
+                        </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

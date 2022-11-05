@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>offer</title>
+</head>
+<body>
+<!--/*@thymesVar id="offer" type="com.lisovenko.offeraid.entities.DTOs.ListingDTO"*/-->
+<th:block th:fragment="default(offer)" th:with="url=${#httpServletRequest.requestURI}">
+    <h5>
+        <a class="text-decoration-none link-secondary"
+           th:href="@{{url}/{id}(url=${url}, id=${offer.id})}"
+           th:text="|${offer.title} #{in} ${offer.area.name}|">
+        </a>
+    </h5>
+    <ul class="list-inline">
+        <li class="list-inline-item"
+            th:text="${#temporals.format(offer.createdAt, 'dd/MM/yyyy HH:mm')}">Created
+        </li>
+        <li class="list-inline-item"
+            th:text="${offer.user.name}">User
+        </li>
+    </ul>
+</th:block>
+
+<!--/*@thymesVar id="offer" type="com.lisovenko.offeraid.entities.DTOs.ListingDTO"*/-->
+<th:block th:fragment="search(offer)">
+    <h5>
+        <a class="text-decoration-none link-secondary"
+           th:href="@{{area}/categories/{category}/offers/{id}(area=${offer.area.url()}, category=${offer.category.url}, id=${offer.id})}"
+           th:text="|${offer.title} #{in} ${offer.area.name}|">
+        </a>
+    </h5>
+    <p class="mb-1" th:utext="${#strings.unescapeJava(#strings.replace(#strings.escapeJava(offer.body),'\n','&lt;br /&gt;'))}">
+        Description</p>
+    <ul class="list-inline">
+        <li class="list-inline-item"
+            th:text="${#temporals.format(offer.createdAt, 'dd/MM/yyyy HH:mm')}">Created
+        </li>
+        <li class="list-inline-item"
+            th:text="${offer.user.name}">User
+        </li>
+    </ul>
+</th:block>
+
+<!--/*@thymesVar id="offer" type="com.lisovenko.offeraid.entities.DTOs.OfferDTO"*/-->
+<th:block th:fragment="user(offer)" th:with="url=${#httpServletRequest.requestURI}">
+    <h5>
+        <a class="text-decoration-none link-secondary"
+           th:href="@{{area}/categories/{category}/offers/{id}(area=${offer.area.url}, category=${offer.category.url}, id=${offer.id})}"
+           th:if="${offer.active}"
+           th:text="|${offer.title} #{in} ${offer.area.name}|">
+        </a>
+        <a class="text-decoration-none link-secondary pe-none"
+           th:href="@{{url}/{id}/edit(url=${url}, id=${offer.id})}"
+           th:if="${!offer.active}"
+           th:text="|${offer.title} #{in} ${offer.area.name}|">
+        </a>
+    </h5>
+    <ul class="list-inline mb-1">
+        <li class="list-inline-item"
+            th:text="${#temporals.format(offer.createdAt, 'dd/MM/yyyy HH:mm')}">Created
+        </li>
+    </ul>
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <a class="text-decoration-none"
+               th:href="@{{url}/{id}/edit(url=${url}, id=${offer.id})}"
+               th:text="#{edit}">Edit
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="text-decoration-none"
+               th:href="@{/offers/{offerId}(offerId=${offer.id})}"
+               th:onclick="'event.preventDefault(); if(confirm(\''+#{confirm}+'\')) { document.getElementById(\'offer-remove-form-'+${offer.id}+'\').submit() }'"
+               th:text="#{remove}">
+                Remove</a>
+            <form class="d-none"
+                  th:action="@{/offers/{offerId}(offerId=${offer.id})}"
+                  th:id="'offer-remove-form-' + ${offer.id}"
+                  th:method="DELETE"></form>
+        </li>
+    </ul>
+</th:block>
+
+<!--/*@thymesVar id="favouriteOffer" type="com.lisovenko.offeraid.entities.DTOs.FavOfferDTO"*/-->
+<th:block th:fragment="favourite(favouriteOffer)" th:with="offer=${favouriteOffer.offer}">
+    <h5>
+        <a class="text-decoration-none link-secondary"
+           th:href="@{/{area}/categories/{category}/offers/{id}(area=${offer.area.url}, category=${offer.category.url}, id=${offer.id})}"
+           th:text="|${offer.title} #{in} ${offer.area.name}|">
+        </a>
+    </h5>
+    <ul class="list-inline mb-1">
+        <li class="list-inline-item"
+            th:text="|#{created} ${#temporals.format(offer.createdAt, 'dd/MM/yyyy HH:mm')}|">Created
+        </li>
+        <li class="list-inline-item"
+            th:text="${offer.user.name}">User
+        </li>
+    </ul>
+    <ul class="list-inline">
+        <li class="list-inline-item"
+            th:text="|#{added} ${#temporals.format(favouriteOffer.createdAt, 'dd/MM/yyyy HH:mm')}|">Added
+        </li>
+        <li class="list-inline-item">
+            <a class="text-decoration-none"
+               th:href="@{/offers/{offerId}/favourites(offerId=${offer.id})}"
+               th:onclick="'event.preventDefault(); document.getElementById(\'offer-unfavourite-form-' + ${offer.id} + '\').submit();'"
+               th:text="#{offer.remove-from-favourites}">
+                Remove from favourites</a>
+            <form class="d-none" th:action="@{/offers/{offerId}/favourites(offerId=${offer.id})}"
+                  th:id="'offer-unfavourite-form-' + ${offer.id}"
+                  th:method="DELETE"></form>
+        </li>
+    </ul>
+</th:block>
+
+<th:block>
+    <h5>
+        <a class="text-decoration-none link-secondary"
+           th:href="@{/{area}/categories/{category}/offers/{id}(area=${offer.area.url}, category=${offer.category.url}, id=${offer.id})}"
+           th:text="|${offer.title} #{in} ${offer.area.name}|">
+        </a>
+    </h5>
+    <ul class="list-inline mb-1">
+        <li class="list-inline-item"
+            th:text="|#{created} ${#temporals.format(offer.createdAt, 'dd/MM/yyyy HH:mm')}|">Created
+        </li>
+        <li class="list-inline-item"
+            th:text="${offer.user.name}">User
+        </li>
+    </ul>
+</th:block>
+
+</body>
+</html>

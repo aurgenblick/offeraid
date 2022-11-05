@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>menu</title>
+</head>
+<body>
+
+<header class="p-2 mb-2 border-bottom bg-white" th:fragment="menu">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a class="mb-2 text-dark text-decoration-none me-4" th:href="@{/}">
+        <span class="fs-3">OfferAid</span>
+        <!--/*@thymesVar id="currentArea" type=""*/-->
+        <span th:if="${session.currentArea}" th:text="|(${session.currentArea.name})|">Санкт-Петербург</span>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li th:if="${session.currentArea}">
+          <a class="nav-link px-2 link-secondary"
+             th:classappend="${#strings.contains(#request.requestURI, '/categories') ? 'link-dark' : ''}"
+             th:href="@{/{url}/categories(url=${session.currentArea.url})}"
+             th:text="#{categories}">Categories</a></li>
+        <li><a class="nav-link px-2 link-secondary"
+               th:classappend="${#request.requestURI == '/about' ? 'link-dark' : ''}"
+               th:href="@{/about}"
+               th:text="#{about}">About</a></li>
+      </ul>
+
+      <form method="get" th:action="@{/search}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <div class="input-group input-group-sm">
+          <input aria-describedby="search-button" th:aria-label="#{search}" class="form-control"
+                 name="query" type="search" th:value="${query}?:''">
+          <button class="btn btn-outline-secondary" id="search-button" th:text="#{search}" type="submit">Search</button>
+        </div>
+      </form>
+
+      <div class="col-md-3 text-end" sec:authorize="!isAuthenticated()">
+        <a class="btn btn-outline-primary me-2" th:href="@{/login}" th:text="#{login}">Login</a
+        ><a class="btn btn-primary" th:href="@{/register}" th:text="#{register}">Register</a>
+      </div>
+
+      <div class="dropdown text-end" sec:authorize="isAuthenticated()">
+        <button aria-expanded="false" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                id="user-menu" sec:authentication="name" type="button">
+          User
+        </button>
+        <ul aria-labelledby="user-menu" class="dropdown-menu text-small">
+          <li><a class="dropdown-item"
+                 th:href="@{/offers}"
+                 th:text="#{offers.user-offers}">User offers</a></li>
+          <li><a class="dropdown-item"
+                 th:href="@{/offers/create}"
+                 th:text="#{offer.create-offer}">Create offer</a></li>
+          <li><a class="dropdown-item"
+                 th:href="@{/offers/favourites}"
+                 th:text="#{offers.favourite-offers}">Favourite offers</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item"
+                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();" th:href="@{/logout}"
+                 th:text="#{logout}">Logout</a></li>
+        </ul>
+        <form class="d-none" id="logout-form" method="POST" th:action="@{/logout}"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+</body>
+</html>
