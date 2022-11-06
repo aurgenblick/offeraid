@@ -17,7 +17,7 @@ public interface AreaRepository extends CrudRepository<Area, Integer> {
   Optional<Area> findByUrl(String url);
 
   @Query(
-      "select a.id from Area a where a.areaUrl = :url"
+      "select a.id from Area a where a.url = :url"
           + " order by a.id")
   List<Integer> findAreas(String url);
 }

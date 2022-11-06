@@ -26,11 +26,11 @@ public class Area {
 
     @NotBlank
     @Column(nullable = false)
-    private String areaName;
+    private String name;
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    private String areaUrl;
+    private String url;
 
     private boolean usable;
 
@@ -39,8 +39,8 @@ public class Area {
     @UpdateTimestamp private LocalDateTime updatedAt;
 
 
-    public Area(String areaName) {
-        this.areaName = areaName;
+    public Area(String name) {
+        this.name = name;
     }
 
     @Override
@@ -68,8 +68,8 @@ public class Area {
                 "{0}(id = {1}, name = {2}, url = {3}, createdAt = {4}, updatedAt = {5}",
                 getClass().getSimpleName(),
                 id,
-                areaName,
-                areaUrl,
+                name,
+                url,
                 createdAt,
                 updatedAt);
     }

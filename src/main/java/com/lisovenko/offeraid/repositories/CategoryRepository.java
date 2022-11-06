@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface CategoryRepository extends CrudRepository<Category, Integer> {
-    List<Category> findAllById();
+    List<Category> findAll();
 
     Optional<Category> findByUrl(String url);
 }

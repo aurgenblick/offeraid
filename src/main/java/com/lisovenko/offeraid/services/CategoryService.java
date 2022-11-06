@@ -24,7 +24,7 @@ public class CategoryService {
 
   @Transactional(readOnly = true)
   public List<CategoryDTO> getAllCategories() {
-    List<Category> categories = categoryRepository.findAllById();
+    List<Category> categories = categoryRepository.findAll();
 
     return categories.stream()
             .map(
@@ -34,7 +34,7 @@ public class CategoryService {
 
   @Transactional(readOnly = true)
   public List<CategoryOfferDTO> getAllCategoriesWithOfferCount(AreaDTO areaDTO) {
-    List<Category> categories = categoryRepository.findAllById();
+    List<Category> categories = categoryRepository.findAll();
     List<Integer> areaIds = areaRepository.findAreas(areaDTO.url());
 
     return categories.stream()
@@ -56,8 +56,8 @@ public class CategoryService {
           Category category, List<Integer> areaIds) {
     long offerSize = getOfferSize(category, areaIds);
     return new CategoryOfferDTO(
-            category.getCatName(),
-            category.getCatUrl(),
+            category.getName(),
+            category.getUrl(),
             offerSize);
   }
 

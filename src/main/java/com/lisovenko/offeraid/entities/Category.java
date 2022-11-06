@@ -25,11 +25,11 @@ public class Category {
 
     @NotBlank
     @Column(nullable = false)
-    private String catName;
+    private String name;
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    private String catUrl;
+    private String url;
 
 
     private boolean usable;
@@ -38,7 +38,7 @@ public class Category {
     private List<Offer> offers = new ArrayList<>();
 
     public Category(String name) {
-        this.catName = name;
+        this.name = name;
     }
 
     public void addOffer(Offer offer) {
@@ -76,7 +76,7 @@ public class Category {
                 "{0}(id = {1}, name = {2}, url = {3})",
                 getClass().getSimpleName(),
                 id,
-                catName,
-                catUrl);
+                name,
+                url);
     }
 }

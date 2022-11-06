@@ -6,8 +6,8 @@ public record CategoryDTO(Integer id, String name, String url, boolean usable) {
   public CategoryDTO(Category category) {
     this(
         category.getId(),
-        category.getCatName(),
-        category.getCatUrl(),
+        category.getName(),
+        category.getUrl(),
         category.isUsable());
   }
 }

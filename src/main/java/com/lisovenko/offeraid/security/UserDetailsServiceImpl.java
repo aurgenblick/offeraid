@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                                         .disabled(!user.isEnabled())
                                         .roles(
                                                 user.getRoles().stream()
-                                                        .map(role -> role.getRoleName().name())
+                                                        .map(role -> role.getName().name())
                                                         .toArray(String[]::new))
                                         .build())
                 .orElseThrow(

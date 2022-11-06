@@ -1,24 +1,17 @@
 package com.lisovenko.offeraid.entities;
 
 
-import java.text.MessageFormat;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import com.lisovenko.offeraid.security.RoleAuth;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.lisovenko.offeraid.security.RoleAuth;
+
+import javax.persistence.*;
+import java.text.MessageFormat;
+import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Table(name = "roles")
 @Entity
@@ -31,7 +24,7 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private RoleAuth roleName;
+    private RoleAuth name;
 
     @ManyToMany(mappedBy = "roles")
     @Column(nullable = false)
@@ -63,6 +56,6 @@ public class Role {
     public String toString() {
         return MessageFormat.format(
                 "{0}(id = {1}, name = {2}, createdAt = {3}, updatedAt = {4})",
-                this.getClass().getSimpleName(), id, roleName, createdAt, updatedAt);
+                this.getClass().getSimpleName(), id, name, createdAt, updatedAt);
     }
 }

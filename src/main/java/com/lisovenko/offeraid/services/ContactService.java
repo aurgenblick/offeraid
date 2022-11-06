@@ -1,8 +1,8 @@
 package com.lisovenko.offeraid.services;
 
+import com.lisovenko.offeraid.entities.DTOs.OfferDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import com.lisovenko.offeraid.entities.DTOs.OfferDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
 import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 
@@ -24,23 +25,23 @@ public class ContactService {
   private String email;
 
   public void sendMessage(
-      OfferDTO offer, String message, String senderEmail, String offerURI) {
-    var simpleMailMessage = constructEmailMessage(offer, message, senderEmail, offerURI);
+      OfferDTO listing, String message, String senderEmail, String listingURI) {
+    var simpleMailMessage = constructEmailMessage(listing, message, senderEmail, listingURI);
     mailSender.send(simpleMailMessage);
   }
 
   @SneakyThrows
   private MimeMessage constructEmailMessage(
-      OfferDTO offer, String message, String senderEmail, String offerUrl) {
+          OfferDTO listing, String message, String senderEmail, String listingURI) {
     String subject =
         messages.getMessage(
-            "contact.email.subject", new String[] {senderEmail, offer.title()}, Locale.ENGLISH);
+            "contact.email.subject", new String[] {senderEmail, listing.title()}, Locale.ENGLISH);
 
     Context context = new Context();
-    context.setVariable("offer", offer);
+    context.setVariable("listing", listing);
     context.setVariable("message", message);
     context.setVariable("senderEmail", senderEmail);
-    context.setVariable("offerURI", offerUrl);
+    context.setVariable("listingURI", listingURI);
     context.setVariable("subject", subject);
 
     String process = templateEngine.process("emails/contact", context);
@@ -50,7 +51,7 @@ public class ContactService {
     helper.setText(process, true);
     helper.setFrom(email);
     helper.setReplyTo(senderEmail);
-    helper.setTo(offer.user().email());
+    helper.setTo(listing.user().email());
     return mimeMessage;
   }
 }
