@@ -29,8 +29,17 @@ public class DataLoader implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
+    //loadUsers();
     loadAreas();
     loadCategories();
+  }
+
+  private void loadUsers() throws IOException {
+//    List<UserDTO> users =
+//            mapper.readValue(
+//                    //@TODO define
+//                    ResourceUtils.getFile("classpath:data/.json"),
+//                    mapper.getTypeFactory().constructCollectionType(List.class, AreaDTO.class));
   }
 
   private void loadAreas() throws IOException {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{layouts/main}"
+      layout:decorate="~{main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -16,8 +16,8 @@
                     <div class="col-md-12 mb-4" th:each="area : ${areas}">
                         <h3 class="mb-3 fs-2">
                             <a class="text-decoration-none link-secondary"
-                               th:href="@{/{url}/categories(url=${area.areaUrl})}"
-                               th:text="${area.areaName}">Area</a>
+                               th:href="@{/{url}/categories(url=${area.url})}"
+                               th:text="${area.name}">Area</a>
                             <hr>
                         </h3>
                         </div>

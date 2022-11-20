@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{layouts/main}"
+      layout:decorate="~{main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
 >
@@ -27,7 +27,7 @@
 
 <main layout:fragment="page-content">
   <div class="text-center">
-    <th:block th:replace="fragments/alerts :: login"></th:block>
+    <th:block th:replace="alerts :: login"></th:block>
 
     <div class="form-login">
       <form method="post" th:action="@{/login}">

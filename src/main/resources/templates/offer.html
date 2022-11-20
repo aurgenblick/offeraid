@@ -6,7 +6,7 @@
     <title>offer</title>
 </head>
 <body>
-<!--/*@thymesVar id="offer" type="com.lisovenko.offeraid.entities.DTOs.ListingDTO"*/-->
+<!--/*@thymesVar id="offer" type="com.lisovenko.offeraid.entities.DTOs.OfferDTO"*/-->
 <th:block th:fragment="default(offer)" th:with="url=${#httpServletRequest.requestURI}">
     <h5>
         <a class="text-decoration-none link-secondary"
@@ -24,7 +24,7 @@
     </ul>
 </th:block>
 
-<!--/*@thymesVar id="offer" type="com.lisovenko.offeraid.entities.DTOs.ListingDTO"*/-->
+<!--/*@thymesVar id="offer" type="com.lisovenko.offeraid.entities.DTOs.OfferDTO"*/-->
 <th:block th:fragment="search(offer)">
     <h5>
         <a class="text-decoration-none link-secondary"
@@ -84,7 +84,6 @@
     </ul>
 </th:block>
 
-<!--/*@thymesVar id="favouriteOffer" type="com.lisovenko.offeraid.entities.DTOs.FavOfferDTO"*/-->
 <th:block th:fragment="favourite(favouriteOffer)" th:with="offer=${favouriteOffer.offer}">
     <h5>
         <a class="text-decoration-none link-secondary"

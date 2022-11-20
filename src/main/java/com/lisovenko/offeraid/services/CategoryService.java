@@ -19,52 +19,52 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CategoryService {
-  private final CategoryRepository categoryRepository;
-  private final AreaRepository areaRepository;
+    private final CategoryRepository categoryRepository;
+    private final AreaRepository areaRepository;
 
-  @Transactional(readOnly = true)
-  public List<CategoryDTO> getAllCategories() {
-    List<Category> categories = categoryRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<CategoryDTO> getAllCategories() {
+        List<Category> categories = categoryRepository.findAll();
 
-    return categories.stream()
-            .map(
-                    category -> new CategoryDTO(category))
-            .toList();
-  }
+        return categories.stream()
+                .map(
+                        category -> new CategoryDTO(category))
+                .toList();
+    }
 
-  @Transactional(readOnly = true)
-  public List<CategoryOfferDTO> getAllCategoriesWithOfferCount(AreaDTO areaDTO) {
-    List<Category> categories = categoryRepository.findAll();
-    List<Integer> areaIds = areaRepository.findAreas(areaDTO.url());
+    @Transactional(readOnly = true)
+    public List<CategoryOfferDTO> getAllCategoriesWithOfferCount(AreaDTO areaDTO) {
+        List<Category> categories = categoryRepository.findAll();
+        List<Integer> areaIds = areaRepository.findAreas(areaDTO.url());
+        //@TODO fix offers counting always set to zero
+        return categories.stream()
+                .map(
+                        category ->
+                                getCategoryOfferDTO(
+                                        category, areaIds))
+                .toList();
+    }
 
-    return categories.stream()
-            .map(
-                    category ->
-                            getCategoryOfferDTO(
-                                    category, areaIds))
-            .toList();
-  }
+    public CategoryDTO findByUrl(String url) {
+        return categoryRepository
+                .findByUrl(url)
+                .map(CategoryDTO::new)
+                .orElseThrow(CategoryNotFoundException::new);
+    }
 
-  public CategoryDTO findByUrl(String url) {
-    return categoryRepository
-            .findByUrl(url)
-            .map(CategoryDTO::new)
-            .orElseThrow(CategoryNotFoundException::new);
-  }
+    private CategoryOfferDTO getCategoryOfferDTO(
+            Category category, List<Integer> areaIds) {
+        long offerSize = getOfferSize(category, areaIds);
+        return new CategoryOfferDTO(
+                category.getName(),
+                category.getUrl(),
+                offerSize);
+    }
 
-  private CategoryOfferDTO getCategoryOfferDTO(
-          Category category, List<Integer> areaIds) {
-    long offerSize = getOfferSize(category, areaIds);
-    return new CategoryOfferDTO(
-            category.getName(),
-            category.getUrl(),
-            offerSize);
-  }
-
-  private long getOfferSize(Category category, List<Integer> areaIds) {
-    List<Offer> offers = category.getOffers();
-    return offers.stream()
-            .filter(offer -> offer.isActive() && areaIds.contains(offer.getArea().getId()))
-            .count();
-  }
+    private long getOfferSize(Category category, List<Integer> areaIds) {
+        List<Offer> offers = category.getOffers();
+        return offers.stream()
+                .filter(offer -> offer.isActive() && areaIds.contains(offer.getArea().getId()))
+                .count();
+    }
 }

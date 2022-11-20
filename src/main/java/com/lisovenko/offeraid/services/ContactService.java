@@ -25,33 +25,33 @@ public class ContactService {
   private String email;
 
   public void sendMessage(
-      OfferDTO listing, String message, String senderEmail, String listingURI) {
-    var simpleMailMessage = constructEmailMessage(listing, message, senderEmail, listingURI);
+      OfferDTO offer, String message, String senderEmail, String offerURI) {
+    var simpleMailMessage = constructEmailMessage(offer, message, senderEmail, offerURI);
     mailSender.send(simpleMailMessage);
   }
 
   @SneakyThrows
   private MimeMessage constructEmailMessage(
-          OfferDTO listing, String message, String senderEmail, String listingURI) {
+          OfferDTO offer, String message, String senderEmail, String offerURI) {
     String subject =
         messages.getMessage(
-            "contact.email.subject", new String[] {senderEmail, listing.title()}, Locale.ENGLISH);
+            "contact.email.subject", new String[] {senderEmail, offer.title()}, Locale.ENGLISH);
 
     Context context = new Context();
-    context.setVariable("listing", listing);
+    context.setVariable("offer", offer);
     context.setVariable("message", message);
     context.setVariable("senderEmail", senderEmail);
-    context.setVariable("listingURI", listingURI);
+    context.setVariable("offerURI", offerURI);
     context.setVariable("subject", subject);
 
-    String process = templateEngine.process("emails/contact", context);
+    String process = templateEngine.process("contact", context);
     MimeMessage mimeMessage = mailSender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
     helper.setSubject(subject);
     helper.setText(process, true);
     helper.setFrom(email);
     helper.setReplyTo(senderEmail);
-    helper.setTo(listing.user().email());
+    helper.setTo(offer.user().email());
     return mimeMessage;
   }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{layouts/main}"
+      layout:decorate="~{main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,12 +13,13 @@
     <div class="card-body">
       <div class="container">
         <div class="row">
+          <!--/*@thymesVar id="categories" type="com.lisovenko.offeraid.controllers.CategoryController"*/-->
           <div class="col-md-4 mb-4" th:each="category : ${categories}"
                th:with="url=${#httpServletRequest.requestURI}">
                 <h5>
                   <a class="text-decoration-none link-secondary"
-                     th:href="@{{url}/{catUrl}/offers(url=${url}, slug=${category.catUrl})}"
-                     th:text="#{${category.catUrl}}">Category</a>
+                     th:href="@{{url}/{url}/offers(url=${url}, url=${category.url})}"
+                     th:text="#{${category.url}}">Category</a>
                   <span class="badge rounded-pill bg-light text-secondary"
                         th:text="${category.offers}">0</span>
                 </h5>

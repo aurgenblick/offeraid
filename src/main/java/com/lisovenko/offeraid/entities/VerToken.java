@@ -39,7 +39,8 @@ public class VerToken {
     public VerToken(String token, User user) {
         this.token = token;
         this.user = user;
-        this.expiryDate = createdAt.plusHours(24L);
+        this.expiryDate = LocalDateTime.now().plusHours(24L);
+        //@TODO debug for the case when createdAt = null
     }
 
     @Override

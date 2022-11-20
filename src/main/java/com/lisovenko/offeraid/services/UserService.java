@@ -31,6 +31,7 @@ public class UserService {
 
         var user =
                 new User(userDTO.name(), userDTO.email(), passwordEncoder.encode(userDTO.password()));
+                //new User(userDTO.name(), userDTO.email(), userDTO.password());
         var role = roleRepository.findByName(RoleAuth.USER);
 
         if (role.isEmpty()) {
