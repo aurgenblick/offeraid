@@ -86,12 +86,12 @@ CREATE TABLE offers
     CONSTRAINT fk_offers_on_user FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE user_favorite_offer
+CREATE TABLE user_favourite_offer
 (
     user_id    INTEGER NOT NULL,
     offer_id INTEGER NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    CONSTRAINT pk_user_favorite_offer PRIMARY KEY (user_id, offer_id),
-    CONSTRAINT fk_user_favorite_offer_on_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    CONSTRAINT fk_user_favorite_offer_on_offer FOREIGN KEY (user_id) REFERENCES offers (id) ON DELETE CASCADE
+    CONSTRAINT pk_user_favourite_offer PRIMARY KEY (user_id, offer_id),
+    CONSTRAINT fk_user_favourite_offer_on_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_user_favourite_offer_on_offer FOREIGN KEY (user_id) REFERENCES offers (id) ON DELETE CASCADE
 );

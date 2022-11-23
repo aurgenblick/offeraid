@@ -11,11 +11,5 @@ services:
       POSTGRES_DB: offeraid
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-  mailhog:
-    image: mailhog/mailhog:v1.0.1
-    restart: always
-    ports:
-      - 456:456 # mail
-      - 8080:8080 # web (tomcat default)
 volumes:
   postgres_data:

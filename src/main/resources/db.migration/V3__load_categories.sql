@@ -1,9 +1,7 @@
 INSERT INTO public.categories (id, name, url, usable)
-VALUES (1, 'Здоровье', 'health', NULL),
-       (2, 'Одежда', 'clothes', NULL),
-       (3, 'Мебель', 'furniture', NULL),
-       (4, 'Язык', 'language', NULL),
-       (5, 'Аренда', 'rental', NULL);
+VALUES (1, 'Здоровье', 'health', TRUE),
+       (2, 'Одежда', 'clothes', TRUE),
+       (3, 'Мебель', 'furniture', TRUE),
+       (4, 'Язык', 'language', TRUE),
+       (5, 'Аренда', 'rental', TRUE);
 
-UPDATE categories
-SET usable = TRUE;
