@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:13.3-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 #postgres default port
+    environment:
+      POSTGRES_DB: offeraid
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    restart: always
+    ports:
+      - 456:456 # mail
+      - 8080:8080 # web (tomcat default)
+volumes:
+  postgres_data:
