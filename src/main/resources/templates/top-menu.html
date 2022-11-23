@@ -66,8 +66,6 @@
         <form class="d-none" id="logout-form" method="POST" th:action="@{/logout}"></form>
       </div>
 
-      <!--/* Language selector won't work on login, since LocaleChangeInterceptor is loaded after SecurityFilters */-->
-      <!--/* Have to rely on JS setLangCookie and CookieLocaleResolver */-->
       <div class="ms-4 dropdown text-end">
         <a aria-expanded="false" class="d-block link-dark text-decoration-none dropdown-toggle"
            data-bs-toggle="dropdown"

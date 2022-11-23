@@ -10,8 +10,8 @@
 <div layout:fragment="page-content">
   <div class="text-center">
     <h2 class="fs-1 mb-3">400</h2>
-    <p class="mb-4" th:text="#{error.server-error}">There was an error.</p>
-    <a th:href="@{/}"><span th:text="#{back.to.home.page}">Back to home page</span></a>
+    <p class="mb-4" th:text="#{error.server-error}">An error occured.</p>
+    <a th:href="@{/}"><span th:text="#{back.to.home.page}">Go back to home page</span></a>
   </div>
   <th:block th:if="${exception}">
     <div class="mt-3 fs-2">Technical Information</div>
